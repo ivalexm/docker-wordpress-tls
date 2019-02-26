@@ -27,12 +27,7 @@ RUN pacman -S --noprogressbar --noconfirm --needed  libjpeg-turbo libpng libzip 
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wpsu && \
-    wpsu core download && \
-    [ $CREATE_LOCAL_WP = "1" ] && wpsu config create --dbname=$WORDPRESS_DB_NAME --dbuser=$WORDPRESS_DB_USER --dbpass=$WORDPRESS_DB_PASSWORD \
-    --dbhost=$WORDPRESS_DB_HOST --dbprefix=$WORDPRESS_table_prefix --dbcharset=$WORDPRESS_DB_CHARSET --extra-php <<PHP
-    define( 'WP_DEBUG', $WORDPRESS_WP_DEBUG );
-    define( 'WP_DEBUG_LOG', $WORDPRESS_WP_DEBUG_LOG );
-PHP
+    wpsu core download
 
 COPY entrypoint.sh /usr/local/bin/
 
