@@ -1,9 +1,5 @@
 FROM ivalexmdocker/greytlc-lamp-tls
 
-ENV DATABASE_NAME c
-ENV DATABASE_USER c
-ENV DATABASE_PASSWORD c
-
 ENV WORDPRESS_table_prefix       "wp_"
 ENV WORDPRESS_WP_DEBUG           "0"
 ENV WORDPRESS_WP_DEBUG_LOG       "0"
