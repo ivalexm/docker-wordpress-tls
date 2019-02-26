@@ -21,13 +21,12 @@ file_env() {
 	unset "$fileVar"
 }
 
-
 if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 	if [ "$(id -u)" = '0' ]; then
 		case "$1" in
 			apache2*)
-				user="${APACHE_RUN_USER:-www-data}"
-				group="${APACHE_RUN_GROUP:-www-data}"
+				user="${APACHE_RUN_USER:-http}"
+				group="${APACHE_RUN_GROUP:-http}"
 
 				# strip off any '#' symbol ('#1000' is valid syntax for Apache)
 				pound='#'
@@ -35,8 +34,8 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 				group="${group#$pound}"
 				;;
 			*) # php-fpm
-				user='www-data'
-				group='www-data'
+				user='http'
+				group='http'
 				;;
 		esac
 	else
@@ -253,7 +252,7 @@ $user = getenv('WORDPRESS_DB_USER');
 $pass = getenv('WORDPRESS_DB_PASSWORD');
 $dbName = getenv('WORDPRESS_DB_NAME');
 
-$maxTries = 3;
+$maxTries = 10;
 do {
 	$mysql = new mysqli($host, $user, $pass, '', $port, $socket);
 	if ($mysql->connect_error) {
@@ -275,9 +274,11 @@ if (!$mysql->query('CREATE DATABASE IF NOT EXISTS `' . $mysql->real_escape_strin
 $mysql->close();
 EOPHP
 	fi
+
+	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
 	for e in "${envs[@]}"; do
 		unset "$e"
 	done
 fi
 
-exec "$@"
+exec "$@" 
