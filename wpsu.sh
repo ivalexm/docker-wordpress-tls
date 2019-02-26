@@ -1,3 +1,3 @@
 #! /bin/sh
 
-sudo -E -u www-data /usr/local/bin/wp "$@"
+su www-data -c "/usr/local/bin/wp $@"
