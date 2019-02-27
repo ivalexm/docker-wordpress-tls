@@ -27,8 +27,8 @@ ADD wpsu.sh /usr/local/bin/wpsu
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wpsu && \
-    mkdir -p /var/www/html -m 777 && \
-    cd /var/www/html/ && \
+    mkdir -p /srv/http -m 777 && \
+    cd /srv/http/ && \
     wpsu core download
 
 RUN rm -f /usr/local/bin/entrypoint.sh
@@ -36,8 +36,9 @@ COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 COPY apache2-foreground /usr/local/bin/
-RUN chmod +x /usr/local/bin/apache2-foreground 
+RUN chmod +x /usr/local/bin/apache2-foreground
 
-WORKDIR /var/www/html
+WORKDIR /srv/http
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["apache2-foreground"]
+
