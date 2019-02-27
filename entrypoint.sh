@@ -85,6 +85,9 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			EOF
 			chown "$user:$group" .htaccess
 		fi
+	else
+	  echo >&2 WordPress files found, not installing
+	  ls -l >&2
 	fi
 
     uniqueEnvs=(
