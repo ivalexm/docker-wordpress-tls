@@ -27,6 +27,7 @@ RUN pacman -S --noprogressbar --noconfirm --needed  libjpeg-turbo libpng libzip 
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wpsu && \
+    mkdir -p /var/www/html -m 777 && \
     cd /var/www/html/ && \
     wpsu core download
 
