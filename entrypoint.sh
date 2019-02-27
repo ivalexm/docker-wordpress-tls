@@ -87,7 +87,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		fi
 	else
 	  echo >&2 WordPress files found, not installing
-	  ls -l >&2
+	  ls -l /run/secrets/wordpress >&2
 	fi
 
     uniqueEnvs=(
