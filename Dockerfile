@@ -35,7 +35,7 @@ RUN rm -f /usr/local/bin/entrypoint.sh
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-COPY apache2-foreground usr/local/bin/
+COPY apache2-foreground /usr/local/bin/
 RUN chmod +x /usr/local/bin/apache2-foreground 
 
 WORKDIR /var/www/html
