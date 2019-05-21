@@ -1,4 +1,4 @@
-FROM ivalexmdocker/greytlc-lamp-tls
+FROM local/lamp-tls
 
 ENV WORDPRESS_TABLE_PREFIX_FILE       "wp_"
 ENV WORDPRESS_WP_DEBUG_FILE           "0"
@@ -24,6 +24,7 @@ ENV WORDPRESS_CREATE_LOCAL_WP_FILE    "0"
 RUN pacman -S --noprogressbar --noconfirm --needed  libjpeg-turbo libpng libzip autoconf
 
 ADD wpsu.sh /usr/local/bin/wpsu
+
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wp && \
     chmod +x /usr/local/bin/wpsu && \
@@ -41,4 +42,3 @@ RUN chmod +x /usr/local/bin/apache2-foreground
 WORKDIR /srv/http
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["apache2-foreground"]
-

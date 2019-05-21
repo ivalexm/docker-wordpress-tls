@@ -1,4 +1,7 @@
 #! /bin/sh
 
 start-servers
-sleep infinity
+while : ;do
+  sleep 3600
+done
+
