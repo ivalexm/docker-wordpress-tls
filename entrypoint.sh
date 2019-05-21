@@ -257,7 +257,7 @@ $dbName = getenv('WORDPRESS_DB_NAME');
 
 $maxTries = 10;
 do {
-	$mysql = new mysqli($host, 'root', $pass, '', $port, $socket);
+	$mysql = new mysqli($host, $user, $pass, '', $port, $socket);
 	if ($mysql->connect_error) {
 		fwrite($stderr, "\n" . 'MySQL Connection Error: (' . $mysql->connect_errno . ') ' . $mysql->connect_error . "\n");
 		--$maxTries;
