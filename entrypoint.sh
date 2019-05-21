@@ -42,7 +42,6 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		user="$(id -u)"
 		group="$(id -g)"
 	fi
-	cd /srv/http
 
 	if [ ! -e index.php ] && [ ! -e wp-includes/version.php ]; then
 		# if the directory exists and WordPress doesn't appear to be installed AND the permissions of it are root:root, let's chown it (likely a Docker-created directory)
@@ -86,6 +85,9 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			EOF
 			chown "$user:$group" .htaccess
 		fi
+	else
+	  echo >&2 WordPress files found, not installing
+	  ls -l /run/secrets/wordpress >&2
 	fi
 
     uniqueEnvs=(
@@ -255,7 +257,7 @@ $dbName = getenv('WORDPRESS_DB_NAME');
 
 $maxTries = 10;
 do {
-	$mysql = new mysqli($host, $user, $pass, '', $port, $socket);
+	$mysql = new mysqli($host, 'root', $pass, '', $port, $socket);
 	if ($mysql->connect_error) {
 		fwrite($stderr, "\n" . 'MySQL Connection Error: (' . $mysql->connect_errno . ') ' . $mysql->connect_error . "\n");
 		--$maxTries;
@@ -282,4 +284,4 @@ EOPHP
 	done
 fi
 
-exec "$@"
+exec "$@" 
